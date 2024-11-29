@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e59232f0a1.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background for a modern look */
+        }
+
+        .jumbotron {
+            background-color: #007bff; /* Primary blue for the header */
+            color: white;
+            padding: 2rem 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .table th, .table td {
+            vertical-align: middle; /* Center-align table text */
+        }
+
+        .form-control {
+            border-radius: 0.3rem; /* Smooth rounded corners */
+        }
+    </style>
+</head>
+<body>
+
+<div xmlns:th="http://www.thymeleaf.org">
+    <!-- Header Section -->
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="display-4">Songs Management</h1>
+            <p class="lead">Easily manage your collection of songs with this simple tool.</p>
+        </div>
+    </section>
+
+    <!-- Error message display -->
+    <div class="container">
+        <div th:if="${hasError}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
+    </div>
+
+    <!-- Songs List Section -->
+
+
+    <!-- Add/Edit Song Form -->
+    <div class="container mt-5" th:if="${albums != null}">
+        <h2 class="text-center mb-4" th:text="${song != null ? 'Edit Song' : 'Add New Song'}"></h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form th:action="@{/songs/add}" th:method="POST">
+                            <input type="hidden" name="id" th:value="${song != null ? song.id : ''}">
+                            <div class="form-group">
+                                <label for="trackId">Track ID</label>
+                                <input type="text" class="form-control" id="trackId" name="trackId"
+                                       th:value="${song != null ? song.trackId : ''}" placeholder="Enter Track ID" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" name="title"
+                                       th:value="${song != null ? song.title : ''}" placeholder="Enter Song Title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="genre">Genre</label>
+                                <input type="text" class="form-control" id="genre" name="genre"
+                                       th:value="${song != null ? song.genre : ''}" placeholder="Enter Genre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="releaseYear">Release Year</label>
+                                <input type="number" class="form-control" id="releaseYear" name="releaseYear"
+                                       th:value="${song != null ? song.releaseYear : ''}" placeholder="Enter Release Year"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="album">Album</label>
+                                <select id="album" name="album" class="form-control" required>
+                                    <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"
+                                            th:selected="${song != null && song.album != null && song.album.id == album.id}">
+                                    </option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                            <a href="/songs" class="btn btn-secondary btn-block">
+                                <i class="fa fa-arrow-left"></i> Cancel
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-black-50 mt-5 bg-light py-3">
+    <div class="container">
+        <p class="text-center mb-0">
+            &copy; 2024 Songs Management. All Rights Reserved.
+        </p>
+    </div>
+</footer>
+</body>
+</html>
