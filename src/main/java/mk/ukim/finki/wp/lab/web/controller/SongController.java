@@ -43,12 +43,12 @@ public class SongController {
 
         return "redirect:/artist";
     }
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteSong(@PathVariable Long id) {
 
         this.songService.deleteById(id);
 
-        return "redirect:/listSongs";
+        return "redirect:/songs";
     }
     @GetMapping("/add-song")
     public String addSongPage(Model model)

@@ -10,6 +10,9 @@ public interface AlbumService {
     List <Album> findAll();
 
     Optional<Album> findById(Long id);
+    void deleteById(Long id);
+    Optional<Album> save(String name, String genre, String releaseYear);
+
 
 
 }

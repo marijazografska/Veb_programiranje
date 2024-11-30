@@ -89,13 +89,14 @@
                         <i class="fa fa-edit"></i> Edit
                     </a>
                     <!-- Delete form
-                    <form th:action="@{'/songs/delete/{id}' (id=${song.id})}" th:method="GET" style="display:inline;">
+                    <form th:action="@{'/songs/delete/{id}' (id=${song.id})}" th:method="POST " style="display:inline;">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-sm btn-danger">
                             <i class="fa fa-trash"></i> Delete
                         </button>
                     </form>
                     -->
+
                 </div>
             </div>
             <!-- Submit button -->
