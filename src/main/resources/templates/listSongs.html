@@ -6,113 +6,52 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/e59232f0a1.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            background-color: #f8f9fa; /* Light gray background for a clean look */
-        }
-
-        .header {
-            text-align: center;
-            margin: 20px 0;
-            color: #343a40; /* Dark gray text */
-        }
-
-        .song-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-
-        .song-item label {
-            font-weight: bold;
-        }
-
-        .btn-submit {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #007bff; /* Bootstrap primary */
-            border: none;
-            color: white;
-            cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .btn-submit:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-dark {
-            display: block;
-            margin: 20px auto;
-            text-align: center;
-        }
-
-        .alert-danger {
-            color: white;
-            background-color: #dc3545;
-            border-color: #dc3545;
-        }
-    </style>
 </head>
 <body>
 <div class="container mt-4">
     <!-- Header -->
-    <header class="header">
+    <header class="header text-center">
         <h1>Welcome to My Music Store</h1>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <h2 class="text-center mb-4">Choose a Song:</h2>
+    <!-- Error Handling -->
+    <div th:if="${hasError}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
 
-        <!-- Display error message if exists -->
-        <div th:if="${hasError}" class="alert alert-danger" role="alert">
-            <p th:text="${error}"></p>
-        </div>
-
-        <!-- Form for selecting a song -->
-        <form th:action="@{/songs}" th:method="POST">
-            <div th:each="song : ${songs}" class="song-item">
-                <!-- Radio button and song details -->
-                <div>
-                    <input type="radio" name="trackId" th:value="${song.trackId}" />
-                    <label th:text="'Title: ' + ${song.title} + ', Genre: ' + ${song.genre} + ', Release Year: ' + ${song.releaseYear} + ', Album: ' + (${song.album != null ? song.album.getName() : 'No Album'})"></label>
-                </div>
-                <!-- Action Buttons -->
-                <div>
-                    <a th:href="@{'/songs/edit-song/{id}' (id=${song.id})}" class="btn btn-sm btn-info">
-                        <i class="fa fa-edit"></i> Edit
-                    </a>
-                    <!-- Delete form
-                    <form th:action="@{'/songs/delete/{id}' (id=${song.id})}" th:method="POST " style="display:inline;">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            <i class="fa fa-trash"></i> Delete
-                        </button>
-                    </form>
-                    -->
-
-                </div>
+    <!-- Songs List -->
+    <h2 class="text-center mb-4">Available Songs</h2>
+    <div class="list-group">
+        <div th:each="song : ${songs}" class="list-group-item d-flex justify-content-between align-items-center">
+            <!-- Song Details -->
+            <div>
+                <p th:text="'Title: ' + ${song.title} + ', Genre: ' + ${song.genre} + ', Year: ' + ${song.releaseYear} + ', Album: ' + (${song.album != null ? song.album.name : 'No Album'})"></p>
             </div>
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-submit">
-                <i class="fa fa-check"></i> Submit
-            </button>
-        </form>
 
-        <!-- Add new song button -->
-        <a href="/songs/add-song" class="btn btn-dark">
-            <i class="fa fa-plus"></i> Add New Song
-        </a>
-    </main>
+            <!-- Action Buttons -->
+            <div>
+                <a th:href="@{'/songs/edit-song/{id}' (id=${song.id})}" class="btn btn-info btn-sm">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+                <form th:action="@{'/songs/delete/{id}' (id=${song.id})}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash"></i> Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Song -->
+    <a href="/songs/add-song" class="btn btn-dark btn-block mt-3">
+        <i class="fa fa-plus"></i> Add New Song
+    </a>
+
+    <a href="/songs/select-album" class="btn btn-primary btn-block mt-3">
+        <i class="fa fa-camera-retro"></i> Filter By Album
+    </a>
 </div>
 
-<!-- Footer -->
 <footer class="text-center mt-5 text-muted">
     <p>&copy; 2024 My Music Store. All Rights Reserved.</p>
 </footer>

@@ -1,9 +1,8 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Album;
-import mk.ukim.finki.wp.lab.model.Song;
-import mk.ukim.finki.wp.lab.model.exceptions.AlbumNotFoundException;
-import mk.ukim.finki.wp.lab.repository.InMemoryAlbumRepository;
+import mk.ukim.finki.wp.lab.repository.impl.InMemoryAlbumRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.AlbumRepository;
 import mk.ukim.finki.wp.lab.service.AlbumService;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +12,9 @@ import java.util.Optional;
 @Service
 public class AlbumServiceImpl implements AlbumService {
 
-    private final InMemoryAlbumRepository albumRepository;
+    private final AlbumRepository albumRepository;
 
-    public AlbumServiceImpl(InMemoryAlbumRepository albumRepository) {
+    public AlbumServiceImpl(AlbumRepository albumRepository) {
         this.albumRepository = albumRepository;
     }
 
@@ -35,10 +34,8 @@ public class AlbumServiceImpl implements AlbumService {
                                String genre,
                                String releaseYear) {
 
-
-
-        return this.albumRepository.save(name,genre,releaseYear);
-
+        Album album=new Album(name,genre,releaseYear);
+        return Optional.of(this.albumRepository.save(album));
     }
     @Override
     public void deleteById(Long id)

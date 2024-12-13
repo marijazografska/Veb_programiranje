@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Songs by Album</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center mb-4" th:text="'Songs in Album: ' + ${album.name}"></h2>
+
+  <div th:if="${songs.isEmpty()}" class="alert alert-warning text-center">
+    <p>No songs available in this album.</p>
+  </div>
+
+  <ul class="list-group" th:if="${!songs.isEmpty()}">
+    <li th:each="song : ${songs}" class="list-group-item">
+      <p th:text="'Title: ' + ${song.title} + ', Genre: ' + ${song.genre} + ', Year: ' + ${song.releaseYear}"></p>
+    </li>
+  </ul>
+
+  <a href="/songs/select-album" class="btn btn-secondary btn-block mt-4"><i class="fa fa-camera-retro"></i>Back to Album Selection</a>
+  <a href="/songs" class="btn btn-primary btn-block mt-4"><i class="fa fa-home fa-fw"></i>Back to Song list</a>
+</div>
+
+<footer class="text-center mt-5 text-muted">
+  <p>&copy; 2024 Songs Management. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

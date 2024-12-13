@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Select Album</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Select an Album</h2>
+
+  <form th:action="@{/songs/songs-by-album}" th:method="POST">
+    <div class="form-group">
+      <label for="albumSelect">Choose Album:</label>
+      <select id="albumSelect" name="albumId" class="form-control" required>
+        <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+  </form>
+</div>
+
+<footer class="text-center mt-5 text-muted">
+  <p>&copy; 2024 Songs Management. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

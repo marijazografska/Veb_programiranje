@@ -20,16 +20,14 @@ public class SongDetailsController {
 
     @GetMapping
     public String getSongDetails(HttpServletRequest request, Model model) {
-
         String trackId = (String) request.getSession().getAttribute("trackId");
 
         if (trackId == null || trackId.isEmpty()) {
-
-            return "redirect:/listSongs?error=No song selected.";
+            return "redirect:/songs?error=NoSongSelected";
         }
 
-
-        Song song = songService.findByTrackId(trackId);
+        Song song = this.songService.findByTrackId(trackId)
+                .orElseThrow(() -> new IllegalArgumentException("Song not found"));
 
         model.addAttribute("listSongs", songService.listSongs());
         model.addAttribute("song", song);

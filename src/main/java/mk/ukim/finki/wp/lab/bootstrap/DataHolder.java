@@ -19,11 +19,11 @@ public class DataHolder {
     @PostConstruct
     public void init() {
         artists=new ArrayList<>();
-        artists.add(new Artist("1","Pharrell","Williams","American raper,producer and singer."));
-        artists.add(new Artist("2","David","Guetta","French house DJ."));
-        artists.add(new Artist("3","Amy","Winehouse","English late singer"));
-        artists.add(new Artist("4","Kelly","Rowland","American singer."));
-        artists.add(new Artist("5","Lenny","Kravitz","American singer and the KING tbh."));
+        artists.add(new Artist("Pharrell","Williams","American raper,producer and singer."));
+        artists.add(new Artist("David","Guetta","French house DJ."));
+        artists.add(new Artist("Amy","Winehouse","English late singer"));
+        artists.add(new Artist("Kelly","Rowland","American singer."));
+        artists.add(new Artist("Lenny","Kravitz","American singer and the KING tbh."));
 
         albums=new ArrayList<>();
         albums.add(new Album("Girl","pop","2013"));
