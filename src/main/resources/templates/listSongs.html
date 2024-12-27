@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Songs Homepage - Welcome to My Music Store</title>
@@ -13,6 +13,16 @@
     <header class="header text-center">
         <h1>Welcome to My Music Store</h1>
     </header>
+    <section>
+        <div th:if="${userDetails} == null">
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        </div>
+        <div th:if="${userDetails} != null">
+            <div>Active User: <th:block th:text="${userDetails}"></th:block> </div>
+            <a href="/auth/logout">Logout</a>
+        </div>
+    </section>
 
     <!-- Error Handling -->
     <div th:if="${hasError}" class="alert alert-danger" role="alert">
@@ -30,10 +40,10 @@
 
             <!-- Action Buttons -->
             <div>
-                <a th:href="@{'/songs/edit-song/{id}' (id=${song.id})}" class="btn btn-info btn-sm">
+                <a th:href="@{'/songs/edit-song/{id}' (id=${song.id})}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')" class="btn btn-info btn-sm">
                     <i class="fa fa-edit"></i> Edit
                 </a>
-                <form th:action="@{'/songs/delete/{id}' (id=${song.id})}" method="POST" style="display:inline;">
+                <form th:action="@{'/songs/delete/{id}' (id=${song.id})}" sec:authorize="hasRole('ROLE_ADMIN')" method="POST" style="display:inline;">
                     <button type="submit" class="btn btn-danger btn-sm">
                         <i class="fa fa-trash"></i> Delete
                     </button>
@@ -43,7 +53,7 @@
     </div>
 
     <!-- Add Song -->
-    <a href="/songs/add-song" class="btn btn-dark btn-block mt-3">
+    <a href="/songs/add-song" class="btn btn-dark btn-block mt-3" sec:authorize="hasRole('ROLE_ADMIN')">
         <i class="fa fa-plus"></i> Add New Song
     </a>
 

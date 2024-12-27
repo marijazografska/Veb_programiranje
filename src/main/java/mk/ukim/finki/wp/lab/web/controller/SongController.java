@@ -1,9 +1,11 @@
 package mk.ukim.finki.wp.lab.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import mk.ukim.finki.wp.lab.model.Album;
 import mk.ukim.finki.wp.lab.model.Song;
 import mk.ukim.finki.wp.lab.service.AlbumService;
 import mk.ukim.finki.wp.lab.service.SongService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,16 +25,18 @@ public class SongController {
     }
 
     @GetMapping()
-    public String getSongsPage(@RequestParam(required = false) String error, Model model) {
+    public String getSongsPage(@RequestParam(required = false) String error, Model model, HttpServletRequest request) {
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
         List<Song> songs = this.songService.listSongs();
         model.addAttribute("songs", songs);
+        model.addAttribute("userDetails", request.getRemoteUser());
         return "listSongs";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/add-song")
     public String addSongPage(Model model) {
         List<Album> albums = this.albumService.findAll();

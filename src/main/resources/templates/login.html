@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+<h1>Login</h1>
+<form action="/auth/login" method="post">
+  <div>
+    <label for="username">
+      Username:
+    </label>
+    <input type="text" name="username" id="username">
+  </div>
+  <div>
+    <label for="password">
+      Password:
+    </label>
+    <input type="text" name="password" id="password">
+  </div>
+  <div th:if="${error} != null" th:text="'Error: ' + ${error}">
+  </div>
+  <button>Login</button>
+</form>
+<a href="/songs">
+  To Home
+</a>
+</body>
+</html>

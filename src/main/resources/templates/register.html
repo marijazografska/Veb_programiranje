@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+</head>
+<body>
+<h1>Register</h1>
+<form action="/auth/register" method="post">
+  <div>
+    <label for="username">
+      Username:
+    </label>
+    <input type="text" name="username" id="username">
+  </div>
+  <div>
+    <label for="password">
+      Password:
+    </label>
+    <input type="text" name="password" id="password">
+  </div>
+  <div>
+    <label for="repeatedPassword">
+      Repeat Password:
+    </label>
+    <input type="text" name="repeatedPassword" id="repeatedPassword">
+  </div>
+  <div>
+    <label for="name">
+      Name:
+    </label>
+    <input type="text" name="name" id="name">
+  </div>
+  <div>
+    <label for="surname">
+      Surname:
+    </label>
+    <input type="text" name="surname" id="surname">
+  </div>
+  <div th:if="${error} != null" th:text="'Error: ' + ${error}">
+  </div>
+  <button>Register</button>
+</form>
+<a href="/songs">
+  To Home
+</a>
+</body>
+</html>
